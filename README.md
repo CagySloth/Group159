@@ -43,3 +43,28 @@ If four Shelter cards are placed within a 2x2 square, the player's health point 
 If four Forge cards are placed within a 2x2 square, the player’s defense and attack damage increase.
 
 If all card slots are full, attributes will be permanently stored in the player. Cards slots will be freed out.
+
+Equipment and Accessories
+Equipment and accessories will contribute to the player’s attributes. For instance, armors will improve the player’s defense, weapons will improve attack damage, and accessories might affect all five attributes of the player positively or negatively. As accessories may have negative effects on the player, the player will receive a brief description of the item every time the player encounters one and then decide whether to pick it or not.
+
+How Each Coding Element Supports our Features:
+
+Generation of random game sets or events
+
+As the game features a random number of monsters spawned each day on random locations on the board, random number generators will help to determine these daily events in the game. Moreover, every monster has random drops on their death, which include different skill cards that the player can utilize later.
+
+Data structures for storing game status
+
+Arrays will be used to store the condition of the board (e.g. 0 represents an empty slot, 1 represents the player’s location, 2 represents locations of monsters, etc.), equipment and accessories held by the player, skill cards held by the player, and the player’s stats (e.g. attack, health, mana).
+
+Dynamic memory management
+
+Large arrays will be declared to store equipment and accessories, and skill cards held by the player as the player can collect a vast amount of items, which may lead to a waste of memory as we cannot change the size of the arrays depending on the situations. Dynamic memory management can help to better allocate memory at run-time with the use of pointer and standard library functions (malloc, calloc, realloc and free).
+
+File input/output
+
+Text files will be used to store game status and will be updated after every move of the player, and these data will be accessed by the printing functions to show the game status to the player.
+
+Program codes in multiple files
+
+As the game involves many events repeating randomly every day or among every move made by the player, storing codes with different purposes in multiple files can improve readability of the codes, and thus allow easier debugging. Moreover, multiple functions will be used to calculate player’s attributes and combat results, separating these functions will help improve readability as well.
