@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include "main.cpp"
+#include "struct.cpp"
 #include "equipment.cpp"
 #include "accessories.cpp"
 
@@ -12,15 +12,17 @@ int monster_type = 3; //can adjust later
 void slime(character player, mob monster)
 {
     //slime high defense low attack
+    monster.name = "slime";
     monster.health = 40 + player.day * 5;
     monster.attack = 20 + player.day * 3;
-    monster.attack_speed = 1.2;
+    monster.attack_speed = 12;
     monster.defense = 10 + player.day * 1;
 }
 
 void skeleton(character player, mob monster)
 {
     //skeleton low defense low hp high attack
+    monster.name = "skeleton";
     monster.health = 30 + player.day * 4;
     monster.attack = 30 + player.day * 4;
     monster.attack_speed = 1;
@@ -29,10 +31,11 @@ void skeleton(character player, mob monster)
 
 void wolf(character player, mob monster)
 {
-    //wolf low defense low hp high attack speed;
+    //wolf low defense low hp high attack speed
+    monster.name = "wolf";
     monster.health = 15 + player.day * 3;
     monster.attack = 10 + player.day * 2;
-    monster.attack_speed = 0.4;
+    monster.attack_speed = 4;
     monster.defense = 5;
 }
 
@@ -56,6 +59,7 @@ void loot(character player)
 
 void combat(character player)
 {
+    //randomize the monster type
     srand(time(NULL));
     int temp = rand() % monster_type;
     mob monster;
@@ -64,24 +68,21 @@ void combat(character player)
     {
         case 0:
             slime(player, monster);
-            monster_name = "slime";
             break;
         case 1:
             skeleton(player, monster);
-            monster_name = "skeleton";
             break;
         case 2:
             wolf(player, monster);
-            monster_name = "wolf";
             break;
     }
     //combat starts
     cout << "Monster Type: " << monster_name << endl;
     cout << "Monster Health: " << monster.health << endl;
-    double time_counter = 0;
+    int time_counter = 0;
     while (monster.health > 0)
     {
-        time_counter += 0.1;
+        time_counter++;
         if (time_counter % monster.attack_speed == 0)
         {
             player.health -= monster.attack - player.defense;
@@ -103,11 +104,12 @@ void combat(character player)
     }
     if (player.health > 0)
     {
-        cout << "You won! You have killed the " << monster_name << "!";
+        cout << "You won! You have killed the " << monster.name << "!";
         loot(player);
     }
     else
     {
-        cout << "You died, the " << monster_name << " destroyed you.";
+        cout << "You died, the " << monster.name << " destroyed you.";
+        //
     }
 }
