@@ -4,6 +4,7 @@
 #include "struct.cpp"
 #include "equipment.cpp"
 #include "accessories.cpp"
+#include "cards.cpp"
 
 using namespace std;
 
@@ -49,8 +50,10 @@ void loot(character player)
             equipment(player);
             break;
         case 1:
-        case 2:
             accessories(player);
+            break;
+        case 2:
+            cards(player);
             break;
     }
 }

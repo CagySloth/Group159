@@ -26,3 +26,25 @@ struct mob
     int attack_speed;
     int defense;
 };
+
+struct equipment
+{
+    string name;
+    int health;
+    int attack;
+    int attack_speed;
+    int defense;
+    int movement;
+};
+
+struct accessories
+{
+    string name;
+    string description;
+    int health;
+    int attack;
+    int attack_speed;
+    int defense;
+    int movement;
+
+};
