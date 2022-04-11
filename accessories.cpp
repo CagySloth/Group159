@@ -3,7 +3,7 @@
 #include <ctime>
 #include "struct.cpp"
 
-void accessories(character player)
+void accessories_drop(character player)
 {
 
 }

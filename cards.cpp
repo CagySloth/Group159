@@ -3,7 +3,7 @@
 #include <ctime>
 #include "struct.cpp"
 
-void cards(character player)
+void card_drop(character player)
 {
     srand(time(NULL));
     int idx;

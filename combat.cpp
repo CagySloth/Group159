@@ -47,13 +47,13 @@ void loot(character player)
     switch (temp)
     {
         case 0:
-            equipment(player);
+            equipment_drop(player);
             break;
         case 1:
-            accessories(player);
+            accessories_drop(player);
             break;
         case 2:
-            cards(player);
+            card_drop(player);
             break;
     }
 }
