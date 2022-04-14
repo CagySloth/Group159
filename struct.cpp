@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <cmath>
+#include <string>
 
 struct character
 {
