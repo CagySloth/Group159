@@ -32,7 +32,7 @@ bool cardTile(int x, int y)
 }
 
 // max: 8 possible points; min: 3 possible points
-bool validTile(int b[][9],int pos_x, int pos_y)
+bool validTile(int pos_x, int pos_y)
 {   if(cardTile(pos_x, pos_y) == true){
         return false;
     }
@@ -92,12 +92,59 @@ void setMobsLoc(int b[][9], int numOfMobs)
     }
 }
 
-void print_board(int b[][9]){
+bool neighbouring_tiles(int x, int y, int coords[2]){
+    int x_coord = coords[0];
+    int y_coord = coords[1];
+
+    if(x_coord+1 == x && y_coord == y+1 && validTile(x,y)){
+        return true;
+    }
+    if(x_coord+1 == x && y_coord == y && validTile(x,y)){
+        return true;
+    }
+    if(x_coord+1 == x && y_coord == y-1 && validTile(x,y)){
+        return true;
+    }
+
+    if(x_coord-1 == x && y_coord == y+1 && validTile(x,y)){
+        return true;
+    }
+    if(x_coord-1 == x && y_coord == y && validTile(x,y)){
+        return true;
+    }
+    if(x_coord-1 == x && y_coord == y-1 && validTile(x,y)){
+        return true;
+    }
+
+    if(x_coord == x && y_coord == y+1 && validTile(x,y)){
+        return true;
+    }
+    if(x_coord == x && y_coord == y && validTile(x,y)){
+        return true;
+    }
+    if(x_coord == x && y_coord == y-1 && validTile(x,y)){
+        return true;
+    }
+    return false;
+
+}
+
+//include fog of war
+void print_board(int b[][9], int coord[2]){
+
     for (int r=0; r<9; ++r){
-        for (int c=0; c<9; ++c){
-            cout << b[r][c] << " ";
+        for (int c=0; c=9; ++c){
+            if(cardTile(r,c)){
+                cout << b[r][c] << " ";
+            }
+            if(neighbouring_tiles(r,c, coord)){
+                cout << b[r][c] << " ";
+            }
+
         }
         cout << endl;
     }
 }
+
+
 

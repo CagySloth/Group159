@@ -3,6 +3,8 @@
 #include <cmath>
 #include <string>
 
+using namespace std;
+
 struct equipment
 {
     string name;
