@@ -59,7 +59,7 @@ Arrays will be used to store the condition of the board (e.g. 0 represents an em
 
 Dynamic memory management
 
-Large arrays will be declared to store equipment and accessories, and skill cards held by the player as the player can collect a vast amount of items, which may lead to a waste of memory as we cannot change the size of the arrays depending on the situations. Dynamic memory management can help to better allocate memory at run-time with the use of pointer and standard library functions (malloc, calloc, realloc and free).
+Large arrays will be declared to store equipment and accessories, and skill cards held by the player as the player can collect a vast amount of items, which may lead to a waste of memory as we cannot change the size of the arrays depending on the situations. Dynamic memory management can help to better allocate memory at run-time.
 
 File input/output
 
