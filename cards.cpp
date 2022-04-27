@@ -3,17 +3,21 @@
 #include <ctime>
 #include "struct.cpp"
 
-void card_drop(character player)
+void card_drop(character &player)
 {
     srand(time(NULL));
-    int idx;
-    for (int i = 0; i < 20; ++i)
+    int new_card = rand() % 3;
+    player.cards[new_card]++;
+    switch (new_card)
     {
-        if (player.cards[i] == 0)
-        {
-            idx = i;
+        case 0:
+            cout << "You got a 'Shelter' card!" << endl;
             break;
-        }
+        case 1:
+            cout << "You got a 'Barrack' card!" << endl;
+            break;
+        case 2:
+            cout << "You got a 'Forge' card!" << endl;
+            break;
     }
-    player.cards[idx] = rand() % 3;
 }
