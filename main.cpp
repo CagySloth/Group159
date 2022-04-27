@@ -2,10 +2,11 @@
 #include <stdlib.h>
 #include <cmath>
 #include <string>
+#include <vector>
 #include "struct.cpp"
 #include "board.cpp"
 #include "combat.cpp"
-#include "movement.cpp"
+#include "control.cpp"
 
 using namespace std;
 character player;
@@ -15,6 +16,7 @@ int main()
     
     int board [9][9];
     initBoard(board); // set all entries = 0 
+    vector<Card> hand; // saves your cards
 
     // set player initial location to (4,4)
     player.coord[0] = 4; 
@@ -42,16 +44,15 @@ int main()
             cin >> move_x >> move_y;
             moving_state = move(move_x, move_y, player.coord);
         }
-
-
-        if(enterCombat(board, player.coord[0], player.coord[1]) == true){
-            combat(player);
-        }
-
-
         
 
-    
+        if(enterCombat(board, player.coord[0], player.coord[1]) == true){
+            //vector push back should be done in loot func (embedded in combat)
+            combat(player);
+        }
+        print_hand(hand);
+
+
 
 
 

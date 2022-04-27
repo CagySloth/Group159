@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <cmath>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -50,4 +51,10 @@ struct mob
     int attack;
     int attack_speed;
     int defense;
+};
+
+struct Card
+{
+    string name;
+    int code; //number representation on board
 };

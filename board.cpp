@@ -147,4 +147,8 @@ void print_board(int b[][9], int coord[2]){
 }
 
 
+void show_hand(){
+    
+}
+
 

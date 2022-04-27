@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "struct.cpp"
 #include "board.cpp"
 
 using namespace std;
@@ -17,8 +18,20 @@ bool move(int move_x, int move_y, int player_coord[2]){
         return true;
     }
     else{
-        cout << "Invalid movement. Enter coodinates again." << endl;
+        cout << "Invalid movement. Enter coordinates again." << endl;
         return false;
     }
     
+}
+
+bool by_name(Card a, Card b){
+    return a.name < b.name;
+}
+
+void print_hand(vector<Card> hand){
+    sort(hand.begin(), hand.end(),by_name);
+    for (int i=0; i<hand.size(); ++i){
+        cout << "Your cards: " << hand[i].name<< "| "; 
+    }
+    cout <<endl;
 }
