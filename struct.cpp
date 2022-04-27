@@ -3,28 +3,31 @@
 #include <cmath>
 #include <string>
 
-struct character
+struct equipment
 {
-    struct equipment
-    {
-        string name;
-        int health;
-        int attack;
-        int attack_speed;
-        int defense;
-        int movement;
+    string name;
+    int health;
+    int attack;
+    int attack_speed;
+    int defense;
+    int movement;
     };
 
-    struct accessories
-    {
-        string name;
-        string description;
-        int health;
-        int attack;
-        int attack_speed;
-        int defense;
-        int movement;
-    };
+
+struct accessories
+{
+    string name;
+    string description;
+    int health;
+    int attack;
+    int defense;
+    int movement;
+    accessories * next;
+};
+
+
+struct character
+{
     int day = 0;
     int coord[2] = {4, 4};
     int max_movement = 5;
@@ -35,8 +38,8 @@ struct character
     int attack_speed = 10;
     int defense = 0;
     equipment equipment[4] = {}; //weapon, helmet, armor, boots (increase number of movement per day)
-    accessories accessories[5] = {};
-    int cards[10] = {};
+    accessories * accessories = NULL;
+    int cards[3] = {};
 };
 
 struct mob
