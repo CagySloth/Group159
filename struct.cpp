@@ -11,7 +11,7 @@ struct equipment
     int attack_speed;
     int defense;
     int movement;
-    };
+};
 
 
 struct accessories
@@ -21,7 +21,6 @@ struct accessories
     int health;
     int attack;
     int defense;
-    int movement;
     accessories * next;
 };
 
