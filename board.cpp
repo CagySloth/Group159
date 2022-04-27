@@ -1,5 +1,7 @@
 #include <iostream>
-#include "main.cpp"
+#include <iostream>
+#include <stdlib.h>
+#include <cmath>
 
 using namespace std;
 
@@ -89,3 +91,13 @@ void setMobsLoc(int b[][9], int numOfMobs)
         b[x][y] = 1;
     }
 }
+
+void print_board(int b[][9]){
+    for (int r=0; r<9; ++r){
+        for (int c=0; c<9; ++c){
+            cout << b[r][c] << " ";
+        }
+        cout << endl;
+    }
+}
+

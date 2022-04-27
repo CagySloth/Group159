@@ -26,7 +26,7 @@ struct character
         int movement;
     };
     int day = 0;
-    int coord[2] = {4, 4};
+    int coord[2] = {};
     int max_movement = 5;
     int max_health = 100;
     int health = 100;
