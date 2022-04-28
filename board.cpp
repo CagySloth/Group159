@@ -128,20 +128,5 @@ bool neighbouring_tiles(int x, int y, int coords[2]){
 
 }
 
-//include fog of war
-void print_board(int b[][9], int coord[2]){
 
-    for (int r=0; r<9; ++r){
-        for (int c=0; c=9; ++c){
-            if(cardTile(r,c)){
-                cout << b[r][c] << " ";
-            }
-            if(neighbouring_tiles(r,c, coord)){
-                cout << b[r][c] << " ";
-            }
-
-        }
-        cout << endl;
-    }
-}
 

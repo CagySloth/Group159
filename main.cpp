@@ -9,7 +9,9 @@
 #include "control.h"
 
 using namespace std;
-
+// number rep of mobs = 1
+// number rep of {s,b,f} = {2,3,4}
+// number rep of player = 9
 int main()
 {
 
@@ -20,6 +22,7 @@ int main()
     player.coord[0] = 4;
     player.coord[1] = 4;
 
+    print_board(board, player);
     int moves_cnt = 0; // player move count
     int move_x = 0;
     int move_y = 0;
@@ -29,7 +32,7 @@ int main()
         int numOfMobs = getMobsNum(board, moves_cnt);
 
         setMobsLoc(board, numOfMobs);
-        print_board(board, player.coord);
+        print_board(board, player);
 
         cout << "Select your paths from here: {(1 1),(1 0),(1 -1),(0 1),(0 -1),(-1 1),(-1 0),(-1 -1)} " << endl;
         cout << "Enter your moving path:" << endl;
@@ -71,7 +74,8 @@ int main()
                     {
                         valid_coordinates = cardTile(card_x_pos,card_y_pos); //update flag
                         placed_card = true;
-                        place_card(player, card_command);
+                        place_card(player, card_command, card_x_pos, card_y_pos);
+                        print_board(board, player);
                     }
                     else
                     {
@@ -83,7 +87,7 @@ int main()
             }
         }
 
-        
+    reset_card_tile(board);
 
     }
 }
