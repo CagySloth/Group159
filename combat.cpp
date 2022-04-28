@@ -1,14 +1,12 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include "struct.cpp"
-#include "equipment.cpp"
-#include "accessories.cpp"
-#include "cards.cpp"
+#include "struct.h"
+#include "equipment.h"
+#include "accessories.h"
+#include "cards.h"
 
 using namespace std;
-
-int monster_type = 3; //can adjust later
 
 void slime(character player, mob &monster)
 {
@@ -20,7 +18,7 @@ void slime(character player, mob &monster)
     monster.defense = 10 + player.day/3;
 }
 
-void skeleton(character player, mob &monster)
+void slime(character player, mob &monster)
 {
     //skeleton low defense low hp high attack
     monster.name = "skeleton";
@@ -47,10 +45,10 @@ void loot(character &player)
     switch (temp)
     {
         case 0:
-            equipment_drop(player);
+            equipment_drop(player.equipment, player.day);
             break;
         case 1:
-            accessories_drop(player);
+            accessories_drop(player.accessories, player.day);
             break;
         case 2:
             card_drop(player);
@@ -64,7 +62,7 @@ void combat(character &player)
 {
     //randomize the monster type
     srand(time(NULL));
-    int temp = rand() % monster_type;
+    int temp = rand() % 3;
     mob monster;
     switch (temp)
     {

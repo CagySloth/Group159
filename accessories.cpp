@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include "struct.cpp"
+#include "struct.h"
 
 void pickup(accessories * &ptr, accessories * &p)
 {
@@ -225,7 +225,7 @@ void negative_defense_accessories(accessories * ptr, int d)
     cout << "Your defense is reduced by " << p->defense * -1 << "." << endl;
 }
 
-void accessories_drop(character &player)
+void accessories_drop(accessories * ptr, int d)
 {
     srand(time(NULL));
     if (rand() % 4 != 0)
@@ -234,13 +234,13 @@ void accessories_drop(character &player)
         switch (rand() % 3)
         {
             case 0:
-                health_accessories(player.accessories, player.day);
+                health_accessories(ptr, d);
                 break;
             case 1:
-                attack_accessories(player.accessories, player.day);
+                attack_accessories(ptr, d);
                 break;
             case 2:
-                defense_accessories(player.accessories, player.day);
+                defense_accessories(ptr, d);
                 break;
         }
     }

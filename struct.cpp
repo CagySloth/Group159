@@ -6,8 +6,6 @@
 
 using namespace std;
 
-character player;
-
 struct equipment
 {
     string name = "";
@@ -74,7 +72,6 @@ int update_character_stat(character &player)
     //cards
     
 }
-
 
 struct mob
 {

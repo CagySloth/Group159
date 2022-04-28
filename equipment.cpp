@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include "struct.cpp"
+#include "struct.h"
 
 void sword(equipment equipment[], int d)
 {
@@ -104,22 +104,22 @@ void boots(equipment equipment[], int d)
     cout << "You picked it up and replaced your old boots with it." << endl;
 }
 
-void equipment_drop(character &player)
+void equipment_drop(equipment equipment[], int d)
 {
     srand(time(NULL));
     switch (rand() % 4)
     {
         case 0: //sword
-            sword(player.equipment, player.day);
+            sword(equipment, d);
             break;
         case 1: //helmet
-            helmet(player.equipment, player.day);
+            helmet(equipment, d);
             break;
         case 2: //armor
-            armor(player.equipment, player.day);
+            armor(equipment, d);
             break;
         case 3: //boots
-            boots(player.equipment, player.day);
+            boots(equipment, d);
             break;
     }
 }

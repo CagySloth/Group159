@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
-#include "struct.cpp"
-#include "board.cpp"
+#include "struct.h"
+#include "board.h"
 
 using namespace std;
 //count of cards(global)

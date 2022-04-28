@@ -3,10 +3,10 @@
 #include <cmath>
 #include <string>
 #include <vector>
-#include "struct.cpp"
-#include "board.cpp"
-#include "combat.cpp"
-#include "control.cpp"
+#include "struct.h"
+#include "board.h"
+#include "combat.h"
+#include "control.h"
 
 using namespace std;
 

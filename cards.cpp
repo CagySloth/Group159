@@ -1,7 +1,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include "struct.cpp"
+#include "struct.h"
+using namespace std;
 
 void card_drop(character &player)
 {
