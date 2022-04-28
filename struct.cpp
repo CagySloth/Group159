@@ -6,6 +6,8 @@
 
 using namespace std;
 
+character player;
+
 struct equipment
 {
     string name = "";
@@ -81,10 +83,4 @@ struct mob
     int attack;
     int attack_speed;
     int defense;
-};
-
-struct Card
-{
-    string name;
-    int code; //number representation on board
 };

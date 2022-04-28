@@ -4,6 +4,10 @@
 #include "board.cpp"
 
 using namespace std;
+//count of cards(global)
+int shelter_count = player.cards[0];
+int barrack_count = player.cards[1];
+int forge_count = player.cards[2];
 
 bool move(int move_x, int move_y, int player_coord[2]){
     
@@ -24,14 +28,36 @@ bool move(int move_x, int move_y, int player_coord[2]){
     
 }
 
-bool by_name(Card a, Card b){
-    return a.name < b.name;
+
+void print_hand(character player){
+
+    cout << "You have " << shelter_count << " Shelters." << endl;
+    cout << "You have " << barrack_count << " Barracks." << endl;
+    cout << "You have " << forge_count << " Forges." << endl;
 }
 
-void print_hand(vector<Card> hand){
-    sort(hand.begin(), hand.end(),by_name);
-    for (int i=0; i<hand.size(); ++i){
-        cout << "Your cards: " << hand[i].name<< "| "; 
+bool card_count_not_zero(character player){
+    int sum;
+    for (int i=0; i<3; ++i){
+        sum += player.cards[i];
     }
-    cout <<endl;
+    if(sum == 0){
+        return false;
+    }
+    return true;
+}
+
+
+
+void place_card(character &player, char s){
+    if(s == 's'){
+        player.cards[0]--;
+
+    }
+    else if (s == 'b'){
+
+    }
+    else if (s == 'f'){
+
+    }
 }

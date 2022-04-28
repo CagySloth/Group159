@@ -1,5 +1,4 @@
 #include <iostream>
-#include <iostream>
 #include <stdlib.h>
 #include <cmath>
 
@@ -145,10 +144,4 @@ void print_board(int b[][9], int coord[2]){
         cout << endl;
     }
 }
-
-
-void show_hand(){
-    
-}
-
 
