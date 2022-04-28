@@ -17,14 +17,14 @@ void slime(character player, mob &monster)
     monster.health = 40 + player.day * 5;
     monster.attack = 20 + player.day * 3;
     monster.attack_speed = 12;
-    monster.defense = 10 + player.day * 1;
+    monster.defense = 10 + player.day/3;
 }
 
 void skeleton(character player, mob &monster)
 {
     //skeleton low defense low hp high attack
     monster.name = "skeleton";
-    monster.health = 30 + player.day * 4;
+    monster.health = 30 + player.day * 7;
     monster.attack = 30 + player.day * 4;
     monster.attack_speed = 1;
     monster.defense = 0;
@@ -34,7 +34,7 @@ void wolf(character player, mob &monster)
 {
     //wolf low defense low hp high attack speed
     monster.name = "wolf";
-    monster.health = 15 + player.day * 3;
+    monster.health = 15 + player.day * 7;
     monster.attack = 10 + player.day * 2;
     monster.attack_speed = 4;
     monster.defense = 5;
