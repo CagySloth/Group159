@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "struct.h"
+#include "data_struct.h"
 #include "board.h"
 
 using namespace std;

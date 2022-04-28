@@ -3,7 +3,7 @@
 #include <cmath>
 #include <string>
 #include <vector>
-#include "struct.h"
+#include "data_struct.h"
 #include "board.h"
 #include "combat.h"
 #include "control.h"
@@ -12,6 +12,9 @@ using namespace std;
 // number rep of mobs = 1
 // number rep of {s,b,f} = {2,3,4}
 // number rep of player = 9
+
+struct character player;
+
 int main()
 {
 

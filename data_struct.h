@@ -1,5 +1,5 @@
-#ifndef STRUCT_H
-#define STUCT_H
+#ifndef DATA_STRUCT_H
+#define DATA_STUCT_H
 
 struct equipment;
 struct accessories;

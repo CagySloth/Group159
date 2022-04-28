@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include "struct.h"
+#include "data_struct.h"
 #include "equipment.h"
 #include "accessories.h"
 #include "cards.h"

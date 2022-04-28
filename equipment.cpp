@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include "struct.h"
+#include "data_struct.h"
 
 void sword(equipment equipment[], int d)
 {

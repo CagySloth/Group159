@@ -1,31 +1,31 @@
 FLAGS = -pedantic-errors -std=c++11
 
-struct.o: struct.cpp struct.h
+data_struct.o: data_struct.cpp data_struct.h
 	g++ $(FLAGS) -c $<
 
-accessories.o: accessories.cpp accessories.h struct.h
+accessories.o: accessories.cpp accessories.h data_struct.h
 	g++ $(FLAGS) -c $<
 
 board.o: board.cpp board.h
 	g++ $(FLAGS) -c $<
 
-cards.o: cards.cpp cards.h struct.h
+cards.o: cards.cpp cards.h data_struct.h
 	g++ $(FLAGS) -c $<
 
-equipment.o: equipment.cpp equipment.h struct.h
+equipment.o: equipment.cpp equipment.h data_struct.h
 	g++ $(FLAGS) -c $<
 
-combat.o: combat.cpp combat.h struct.h equipment.h accessories.h cards.h
+combat.o: combat.cpp combat.h data_struct.h equipment.h accessories.h cards.h
 	g++ $(FLAGS) -c $<
 
-control.o: control.cpp control.h struct.h board.h
+control.o: control.cpp control.h data_struct.h board.h
 	g++ $(FLAGS) -c $<
 
-main.o: main.cpp struct.h board.h combat.h control.h
+main.o: main.cpp data_struct.h board.h combat.h control.h
 	g++ $(FLAGS) -c $<
 
 clean:
-	rm -f main main.o struct.o accessories.o board.o cards.o equipment.o combat.o control.o main.tgz
+	rm -f main main.o data_struct.o accessories.o board.o cards.o equipment.o combat.o control.o main.tgz
 
 tar:
 	tar -czvf main.tgz *.cpp *.h
