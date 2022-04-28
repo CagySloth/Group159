@@ -69,6 +69,8 @@ int update_character_stat(character &player)
             temp_defense += current->defense;
         }
     }
+    //cards
+    
 }
 
 
