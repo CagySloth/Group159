@@ -13,7 +13,6 @@ using namespace std;
 // number rep of {s,b,f} = {2,3,4}
 // number rep of player = 9
 
-struct character player;
 
 int main()
 {
@@ -77,7 +76,7 @@ int main()
                     {
                         valid_coordinates = cardTile(card_x_pos,card_y_pos); //update flag
                         placed_card = true;
-                        place_card(player, card_command, card_x_pos, card_y_pos);
+                        place_card(board, card_command, card_x_pos, card_y_pos);
                         print_board(board, player);
                     }
                     else
