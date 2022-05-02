@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "data_struct.h"
+using namespace std;
 
 void pickup(accessories * &ptr, accessories * &p)
 {
