@@ -33,7 +33,7 @@ struct accessories
 struct character
 {
     int day = 0;
-    int coord[2] = {};
+    int coord[2];
     int max_movement = 5;
     int max_health = 100; //base stat
     int health = 100;
@@ -41,14 +41,14 @@ struct character
     int attack = 25; //base stat
     int attack_speed = 10;
     int defense = 0; //base stat
-    equipment equipment[4] = {}; //weapon, helmet, armor, boots
-    accessories * accessories = NULL;
+    struct equipment equipment[4]; //weapon, helmet, armor, boots
+    struct accessories * accessories = NULL;
     vector<int> cards = {0, 0, 0};
 };
 
-character player;
+struct character player;
 
-int update_character_stat(character &player)
+void update_character_stat(character &player)
 {
     const int equipment_count = 4;
     int temp_health = 100, temp_attack = 25, temp_defense = 0;

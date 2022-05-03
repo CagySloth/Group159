@@ -24,6 +24,9 @@ control.o: control.cpp control.h data_struct.h board.h
 main.o: main.cpp data_struct.h board.h combat.h control.h
 	g++ $(FLAGS) -c $<
 
+main: main.o board.o combat.o control.o
+	g++ $(FLAGS) $^ -o $@
+
 clean:
 	rm -f main main.o data_struct.o accessories.o board.o cards.o equipment.o combat.o control.o main.tgz
 

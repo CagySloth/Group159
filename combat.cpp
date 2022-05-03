@@ -18,7 +18,7 @@ void slime(character player, mob &monster)
     monster.defense = 10 + player.day/3;
 }
 
-void slime(character player, mob &monster)
+void skeleton(character player, mob &monster)
 {
     //skeleton low defense low hp high attack
     monster.name = "skeleton";
@@ -63,7 +63,7 @@ void combat(character &player)
     //randomize the monster type
     srand(time(NULL));
     int temp = rand() % 3;
-    mob monster;
+    struct mob monster;
     switch (temp)
     {
         case 0:

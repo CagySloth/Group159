@@ -13,10 +13,8 @@ using namespace std;
 // number rep of {s,b,f} = {2,3,4}
 // number rep of player = 9
 
-
 int main()
 {
-
     int board[9][9];
     initBoard(board); // set all entries = 0
 
@@ -88,8 +86,7 @@ int main()
                 enter_combat = false;
             }
         }
-
+    update_character_stat(player);
     reset_card_tile(board);
-
     }
 }
