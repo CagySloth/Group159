@@ -87,5 +87,7 @@ struct mob
     int defense;
 };
 
+int board[9][9];
+
 
 #endif
