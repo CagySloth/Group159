@@ -1,8 +1,4 @@
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
 #include "data_struct.h"
-using namespace std;
 
 void card_drop(character &player)
 {

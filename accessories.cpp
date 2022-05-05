@@ -1,6 +1,3 @@
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
 #include "data_struct.h"
 
 void pickup(accessories * &ptr, accessories * &p)

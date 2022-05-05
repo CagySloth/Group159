@@ -1,10 +1,4 @@
-#include <iostream>
-#include <stdlib.h>
-#include <cmath>
 #include "data_struct.h"
-using namespace std;
-
-
 
 void initBoard(int b[][9])
 {

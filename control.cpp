@@ -1,5 +1,3 @@
-#include <iostream>
-#include <string>
 #include "data_struct.h"
 #include "board.h"
 
