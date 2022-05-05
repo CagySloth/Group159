@@ -7,6 +7,7 @@ using namespace std;
 void card_drop(character &player)
 {
     srand(time(NULL));
+    cout << endl;
     int new_card = rand() % 3;
     player.cards[new_card]++;
     switch (new_card)

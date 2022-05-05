@@ -13,9 +13,9 @@ void slime(character player, mob &monster)
     //slime high defense low attack
     monster.name = "slime";
     monster.health = 40 + player.day * 5;
-    monster.attack = 20 + player.day * 3;
+    monster.attack = 5 + player.day * 3;
     monster.attack_speed = 12;
-    monster.defense = 10 + player.day/3;
+    monster.defense = 5 + player.day/3;
 }
 
 void skeleton(character player, mob &monster)
@@ -23,8 +23,8 @@ void skeleton(character player, mob &monster)
     //skeleton low defense low hp high attack
     monster.name = "skeleton";
     monster.health = 30 + player.day * 7;
-    monster.attack = 30 + player.day * 4;
-    monster.attack_speed = 1;
+    monster.attack = 7 + player.day * 3;
+    monster.attack_speed = 6;
     monster.defense = 0;
 }
 
@@ -33,11 +33,12 @@ void wolf(character player, mob &monster)
     //wolf low defense low hp high attack speed
     monster.name = "wolf";
     monster.health = 15 + player.day * 7;
-    monster.attack = 10 + player.day * 2;
+    monster.attack = 3 + player.day * 1;
     monster.attack_speed = 4;
     monster.defense = 5;
 }
 
+//testing cards, remember to change back code
 void loot(character &player)
 {
     srand(time(NULL));
@@ -86,6 +87,7 @@ void combat(character &player)
     cout << "You can choose to attack it or try to dodge and heal yourself" << endl;
     cout << "Input 'A' to attack and 'D' to dodge and heal, any other output will be interpreted as 'A': ";
     cin >> move;
+    cout << endl;
 
     while (monster.health > 0)
     {
@@ -136,17 +138,19 @@ void combat(character &player)
                 cout << "You can choose to attack it or try to dodge and heal yourself" << endl;
                 cout << "Input 'A' to attack and 'D' to dodge and heal, any other output will be interpreted as 'A': ";
                 cin >> move;
+                cout << endl;
             }
         }
     }
     if (player.health > 0)
     {
-        cout << "You won! You have killed the " << monster.name << "!";
+        cout << "You won! You have killed the " << monster.name << "!" << endl;
+        cout << endl;
         loot(player);
     }
     else
     {
-        cout << "You died, the " << monster.name << " destroyed you.";
+        cout << "You died, the " << monster.name << " destroyed you." << endl;
         //
     }
 }

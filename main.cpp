@@ -7,6 +7,7 @@
 #include "board.h"
 #include "combat.h"
 #include "control.h"
+#include "saveandload.h"
 
 using namespace std;
 // number rep of mobs = 1
@@ -18,34 +19,65 @@ int main()
     int board[9][9];
     initBoard(board); // set all entries = 0
 
+    for (int i=0; i<3; ++i){
+        player.cards.push_back(0);
+    }
+    int prev_player_coord[2] = {};
+
     // set player initial location to (4,4)
     player.coord[0] = 4;
     player.coord[1] = 4;
 
-    print_board(board, player);
-    int moves_cnt = 0; // player move count
+    load(player, board);
+    
     int move_x = 0;
     int move_y = 0;
     int moving_path[2] = {};
-    while (player.health != 0)
+    while (player.health > 0)
     {
-        int numOfMobs = getMobsNum(board, moves_cnt);
-
+        int numOfMobs = getMobsNum(board, player.move_count);
         setMobsLoc(board, numOfMobs);
+        cout << "------------------" <<endl;
         print_board(board, player);
+        cout << "------------------" <<endl;
 
+        prev_player_coord[0] = player.coord[0];
+        prev_player_coord[1] = player.coord[1];
+
+        
         cout << "Select your paths from here: {(1 1),(1 0),(1 -1),(0 1),(0 -1),(-1 1),(-1 0),(-1 -1)} " << endl;
         cout << "Enter your moving path:" << endl;
         cin >> move_x >> move_y;
-
+        if (move_x == 9)
+        {
+            return 0;
+        }
         // player can move
         bool moving_state = move(move_x, move_y, player.coord);
-        moves_cnt++;
+        player.move_count++;
+        if (player.move_count == 5)
+        {
+            player.day++;
+            player.move_count = 0;
+            player.health += player.max_health/3;
+            if (player.health >= player.max_health)
+            {
+                player.health = player.max_health;
+            }
+            cout << endl << endl << "You have survived " << player.day << " days." << endl << endl;
+        }
+
         while (moving_state == false)
         {
             cin >> move_x >> move_y;
+            cout << endl;
             moving_state = move(move_x, move_y, player.coord);
         }
+        
+        
+        cout << player.coord[0] << " " << player.coord[1] << endl;
+        cout << prev_player_coord[0] << " " << prev_player_coord[1] << endl;
+        restore_coords(board, player, prev_player_coord);
         // enter combat flag
         bool enter_combat = enterCombat(board, player.coord[0], player.coord[1]);
 
@@ -60,10 +92,12 @@ int main()
                 cout << "You may now place your cards (s: Shelter, b: Barracks, f: Forge)" << endl;
                 cout << "Enter card tile's coordinates (Eg: 1 2)" << endl;
                 cout << "Input should be in the following form: char x_coord y_coord" << endl;
+                print_hand(player);
                 char card_command;
                 int card_x_pos;
                 int card_y_pos;
                 cin >> card_command >> card_x_pos >> card_y_pos;
+                cout << endl;
 
                 bool placed_card = false; //flags for checking
                 bool valid_coordinates = false;
@@ -81,14 +115,18 @@ int main()
                     {
                         cout << "Invalid card or coordinates. Enter again." << endl;
                         cin >> card_command >> card_x_pos >> card_y_pos;
+                        cout << endl;
                     }
                 }
                 enter_combat = false;
             }
         }
+
     update_character_stat(player);
-    reset_card_tile(board);
+    reset_and_update_card_tile(board, player);
+    display_player_stat(player);
+
+    //save
+    save(player, board);
     }
-    
-    
 }

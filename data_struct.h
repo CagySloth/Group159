@@ -16,7 +16,6 @@ struct equipment
     int attack = 0;
     int attack_speed = 0;
     int defense = 0;
-    int movement = 0;
 };
 
 
@@ -32,9 +31,11 @@ struct accessories
 
 struct character
 {
+    string name;
     int day = 0;
     int coord[2];
     int max_movement = 5;
+    int move_count = 0;
     int max_health = 100; //base stat
     int health = 100;
     int regeneration = 0; //base stat
@@ -43,7 +44,7 @@ struct character
     int defense = 0; //base stat
     struct equipment equipment[4]; //weapon, helmet, armor, boots
     struct accessories * accessories = NULL;
-    vector<int> cards = {0, 0, 0};
+    vector<int> cards;
 };
 
 struct character player;
@@ -74,8 +75,9 @@ void update_character_stat(character &player)
             temp_defense += current->defense;
         }
     }
-    //cards
-    
+    player.max_health = temp_health;
+    player.attack = temp_attack;
+    player.defense = temp_defense;
 }
 
 struct mob
@@ -88,6 +90,8 @@ struct mob
 };
 
 int board[9][9];
+const int boardSize = 9;
+const int maxMobs = 15;
 
 
 #endif

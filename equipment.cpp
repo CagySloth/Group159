@@ -57,7 +57,7 @@ void helmet(equipment equipment[], int d)
             break;
     }
     equipment[1].defense = 1 + d/4;
-    cout << "The monster dropped a " << equipment[0].name << "." << endl;
+    cout << "The monster dropped a " << equipment[1].name << "." << endl;
     cout << "You picked it up and replaced your old helmet with it." << endl;
 }
 
@@ -80,14 +80,14 @@ void armor(equipment equipment[], int d)
             break;
     }
     equipment[2].defense = 4 + d/4;
-    cout << "The monster dropped a " << equipment[0].name << "." << endl;
+    cout << "The monster dropped a " << equipment[2].name << "." << endl;
     cout << "You picked it up and replaced your old armor with it." << endl;
 }
 
 void boots(equipment equipment[], int d)
 {
     srand(time(NULL));
-    switch (rand() % 4)
+    switch (rand() % 3)
     {
         case 0:
             equipment[3].name = "Leather Boots";
@@ -100,13 +100,14 @@ void boots(equipment equipment[], int d)
             break;
     }
     equipment[3].defense = 2 + d/4;
-    cout << "The monster dropped a pair of " << equipment[0].name << "." << endl;
+    cout << "The monster dropped a pair of " << equipment[3].name << "." << endl;
     cout << "You picked it up and replaced your old boots with it." << endl;
 }
 
 void equipment_drop(equipment equipment[], int d)
 {
     srand(time(NULL));
+    cout << endl;
     switch (rand() % 4)
     {
         case 0: //sword

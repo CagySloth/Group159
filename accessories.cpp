@@ -6,24 +6,31 @@
 void pickup(accessories * &ptr, accessories * &p)
 {
     //interaction
-    char option = ' ';
+    char option;
     cout << "The monster dropped something on the ground..." << endl;
     cout << p->description << endl;
-    while (option != 'Y' || option != 'N')
+    bool valid_option = false;
+    while (!valid_option)
     {
         cout << "Input 'Y' to pick it up or 'N' to leave it: ";
         cin >> option;
-    }
-    if (option == 'Y')
-    {
-        p->next = ptr;
-        ptr = p;
-        cout << "You picked up the " << p->name << "." << endl;
-    }
-    else
-    {
-        delete p;
-        cout << "The mysterious item slowly fade away in the wind..." << endl;
+        cout << endl;
+        if (option == 'Y')
+        {
+            valid_option = true;
+            p->next = ptr;
+            ptr = p;
+            cout << "You picked up the " << p->name << "." << endl;
+            break;
+        }
+        else if (option == 'N')
+        {
+            valid_option = true;
+            delete p;
+            cout << "The mysterious item slowly fade away in the wind..." << endl;
+            break;
+        }
+        cout << "Invalid command. ";
     }
 }
 
@@ -60,7 +67,7 @@ void health_accessories(accessories * &ptr, int d)
     cout << "Your health is increased by " << p->health << "HP." << endl;
 }
 
-void attack_accessories(accessories * ptr, int d)
+void attack_accessories(accessories * &ptr, int d)
 {
     accessories *p = new accessories;
     p->health = 0;
@@ -93,13 +100,13 @@ void attack_accessories(accessories * ptr, int d)
     cout << "Your attack is increase by " << p->attack << "." << endl;
 }
 
-void defense_accessories(accessories * ptr, int d)
+void defense_accessories(accessories * &ptr, int d)
 {
     srand(time(NULL));
     accessories *p = new accessories;
     p->health = 0;
     p->attack = 0;
-    p->defense = (rand() % 2) + (d % 3);
+    p->defense = (rand() % 2) + (d % 3) + 1;
     p->next = NULL;
     //name
     switch (rand() % 2)
@@ -126,7 +133,7 @@ void defense_accessories(accessories * ptr, int d)
     cout << "Your defense is increased by " << p->defense << "." << endl;
 }
 
-void negative_health_accessories(accessories * ptr, int d)
+void negative_health_accessories(accessories * &ptr, int d)
 {
     accessories *p = new accessories;
     p->health = -(20 + d * 4);
@@ -159,7 +166,7 @@ void negative_health_accessories(accessories * ptr, int d)
     cout << "Your health is reduced by " << p->health * -1 << "HP." << endl;
 }
 
-void negative_attack_accessories(accessories * ptr, int d)
+void negative_attack_accessories(accessories * &ptr, int d)
 {
     accessories *p = new accessories;
     p->health = 0;
@@ -192,12 +199,12 @@ void negative_attack_accessories(accessories * ptr, int d)
     cout << "Your attack is reduced by " << p->attack * -1 << "." << endl;
 }
 
-void negative_defense_accessories(accessories * ptr, int d)
+void negative_defense_accessories(accessories * &ptr, int d)
 {
     accessories *p = new accessories;
     p->health = 0;
     p->attack = 0;
-    p->defense = -(rand() % 2) + (d % 6);
+    p->defense = -(rand() % 2) + (d % 6) + 1;
     p->next = NULL;
     srand(time(NULL));
     //name
@@ -225,7 +232,7 @@ void negative_defense_accessories(accessories * ptr, int d)
     cout << "Your defense is reduced by " << p->defense * -1 << "." << endl;
 }
 
-void accessories_drop(accessories * ptr, int d)
+void accessories_drop(accessories * &ptr, int d)
 {
     srand(time(NULL));
     if (rand() % 4 != 0)
