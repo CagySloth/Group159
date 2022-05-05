@@ -1,5 +1,4 @@
 #include "data_struct.h"
-
 void card_drop(character &player)
 {
     srand(time(NULL));

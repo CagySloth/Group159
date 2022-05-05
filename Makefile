@@ -1,4 +1,5 @@
 FLAGS = -pedantic-errors -std=c++11
+TARGET = main
 
 data_struct.o: data_struct.cpp data_struct.h
 	g++ $(FLAGS) -c $<
@@ -27,8 +28,8 @@ saveandload.o: saveandload.cpp saveandload.h data_struct.h
 main.o: main.cpp data_struct.h board.h combat.h control.h
 	g++ $(FLAGS) -c $<
 
-main: main.o data_struct.o board.o combat.o control.o saveandload.o
-	g++ $(FLAGS) $^ -o main
+$(TARGET): main.o data_struct.o board.o combat.o control.o saveandload.o
+	g++ $(FLAGS) $^ -o $(TARGET)
 
 clean:
 	rm -f main main.o data_struct.o accessories.o board.o cards.o equipment.o combat.o control.o main.tgz

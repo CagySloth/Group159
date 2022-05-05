@@ -1,8 +1,7 @@
 #include "data_struct.h"
 #include "board.h"
 
-using namespace std;
-
+void update_character_stat(character &player);
 
 bool move(int move_x, int move_y, int player_coord[2]){
     
@@ -181,4 +180,35 @@ void restore_coords(int b[][9], character player, int prev_coord[2]){
     if(player.coord[0] != prev_coord[0] || player.coord[1] != prev_coord[1]){
         b[prev_coord[0]][prev_coord[1]] = 0;
     }
+}
+
+void update_character_stat(character &player)
+{
+    const int equipment_count = 4;
+    int temp_health = 100, temp_attack = 25, temp_defense = 0;
+    //equipment
+    for (int i = 0; i < equipment_count; ++i)
+    {
+        temp_health += player.equipment[i].health;
+        temp_attack += player.equipment[i].attack;
+        temp_defense += player.equipment[i].defense;
+    }
+    //accessories
+    if (player.accessories != NULL)
+    {
+        accessories * current = player.accessories;
+        temp_health += current->health;
+        temp_attack += current->attack;
+        temp_defense += current->defense;
+        while (current->next != NULL)
+        {
+            current = current->next;
+            temp_health += current->health;
+            temp_attack += current->attack;
+            temp_defense += current->defense;
+        }
+    }
+    player.max_health = temp_health;
+    player.attack = temp_attack;
+    player.defense = temp_defense;
 }

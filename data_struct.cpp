@@ -7,12 +7,11 @@
 
 using namespace std;
 
-struct equipment;
+struct equipment e;
 
-struct accessories;
+struct accessories a;
 
-struct character;
+struct character p;
 
-void update_character_stat(character &player);
 
-struct mob;
+struct mob m;

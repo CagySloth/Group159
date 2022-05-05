@@ -1,11 +1,8 @@
-#include <cstdlib>
-#include <ctime>
 #include "data_struct.h"
 #include "equipment.h"
 #include "accessories.h"
 #include "cards.h"
 
-using namespace std;
 
 void slime(character player, mob &monster)
 {

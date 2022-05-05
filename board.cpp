@@ -1,5 +1,4 @@
 #include "data_struct.h"
-
 void initBoard(int b[][9])
 {
     for (int i = 0; i < boardSize; ++i)

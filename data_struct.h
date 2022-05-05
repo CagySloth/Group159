@@ -1,8 +1,10 @@
-#ifndef DATA_STRUCT_H
-#define DATA_STRUCT_H
+#ifndef DATA_STRUCT
+#define DATA_STRUCT
 
 #include <iostream>
 #include <stdlib.h>
+#include <cstdlib>
+#include <ctime>
 #include <cmath>
 #include <string>
 #include <vector>
@@ -47,39 +49,6 @@ struct character
     vector<int> cards;
 };
 
-struct character player;
-
-void update_character_stat(character &player)
-{
-    const int equipment_count = 4;
-    int temp_health = 100, temp_attack = 25, temp_defense = 0;
-    //equipment
-    for (int i = 0; i < equipment_count; ++i)
-    {
-        temp_health += player.equipment[i].health;
-        temp_attack += player.equipment[i].attack;
-        temp_defense += player.equipment[i].defense;
-    }
-    //accessories
-    if (player.accessories != NULL)
-    {
-        accessories * current = player.accessories;
-        temp_health += current->health;
-        temp_attack += current->attack;
-        temp_defense += current->defense;
-        while (current->next != NULL)
-        {
-            current = current->next;
-            temp_health += current->health;
-            temp_attack += current->attack;
-            temp_defense += current->defense;
-        }
-    }
-    player.max_health = temp_health;
-    player.attack = temp_attack;
-    player.defense = temp_defense;
-}
-
 struct mob
 {
     string name;
@@ -92,6 +61,7 @@ struct mob
 int board[9][9];
 const int boardSize = 9;
 const int maxMobs = 15;
+character player;
 
 
 #endif

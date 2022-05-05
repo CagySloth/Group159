@@ -1,6 +1,5 @@
 #include "data_struct.h"
 #include <fstream>
-
 //mob =1 
 //sbf = 234
 //p = 9

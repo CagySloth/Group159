@@ -1,5 +1,4 @@
 #include "data_struct.h"
-
 void pickup(accessories * &ptr, accessories * &p)
 {
     //interaction

@@ -1,7 +1,4 @@
-#include <cstdlib>
-#include <ctime>
 #include "data_struct.h"
-
 void sword(equipment equipment[], int d)
 {
     srand(time(NULL));
