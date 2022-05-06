@@ -62,7 +62,7 @@ Vector is used for storage of cards. Linked list is used for storing players' ac
 
 File input/output
 
-Text files will be used to store game status and player name. Game status will be updated after every move of the player.
+Text files will be used to store player's information, attributes and items, and also the card tiles. Game status will be updated after every move of the player.
 
 Program codes in multiple files
 

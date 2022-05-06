@@ -638,7 +638,7 @@ void combat(character &player)
             else
             {
                 dodge_rng = rand() % 10;
-                if (dodge_rng <= 1)
+                if (dodge_rng <= 0)
                 {
                     player.health -= monster.attack - player.defense;
                     cout << "You failed to dodge the attack." << endl << endl;
