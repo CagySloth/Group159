@@ -7,14 +7,15 @@ CagySloth - Ng Ching Lap 3035687742
 Game Description
 
 Game initialization:
-A 9x9 board will be generated at the start of the game, 2 columns from the left and right and the top 2 rows will be reserved for card placement. Coordinates will be (0,0) from the top left to (8,8) at the bottom right.
+A 9x9 board will be generated at the start of the game, Column 0,1,8,9; Row 0,1 are reserved for card placement.
 
 Game flow:
-The player will spawn randomly in the remaining 7x5 space; a random number of monsters will be spawned in the space. The player can move freely in the 7x5 space. The player will only have information about neighboring tiles. 
+The player will spawn randomly in the remaining 7x5 space; a random number of monsters will be spawned in the space. The player can move freely in the 7x5 space.
+
 If the player’s coordinate coincides with monsters’ coordinate, they will enter combat. After combat victory, monsters will have a certain probability of dropping two types of game objects: (1) Cards, (2) Equipment and Accessories. Metric of success in the game is determined by the number of monsters slain before death.
 
 Combat mode:
-Player will attack the monster idly. Attack damage will be random within a certain range given the player's attribute statistics. 
+Player will attack the monster manually. Player can either (1)Attack (2)Dodge and Heal. Attack damage is deterministic given the player's attribute statistics. 
 
 Game objects
 
@@ -29,22 +30,20 @@ Defense
 Heath Regeneration
 Attack Speed
 
-Attack damage will be random within a certain range given the player's attribute statistics. 
 
 Cards
 There are three sets of cards: {Shelter, Barrack, Forge}
 
 Cards can only be placed in the two topmost rows, the two leftmost or two rightmost columns. Following conditions will occur:
-If Barrack is placed next to Forge, the player's defense and attack damage increases
-If Shelter is placed next to Barrack, the player's health regeneration increases.
-If Forge is placed next to Shelter, the player’s health point increases.
-If four Barrack cards are placed within a 2x2 square, the player's attack damage and attack speed increase. 
-If four Shelter cards are placed within a 2x2 square, the player's health point and health regeneration increase.
-If four Forge cards are placed within a 2x2 square, the player’s defense and attack damage increase.
+
+If two Barrack cards are placed within a 2x2 square, the player's attack damage and attack speed increase. 
+If two Shelter cards are placed within a 2x2 square, the player's health point and health regeneration increase.
+If two Forge cards are placed within a 2x2 square, the player’s defense and attack damage increase.
 
 If all card slots are full, attributes will be permanently stored in the player. Cards slots will be freed out.
 
 Equipment and Accessories
+
 Equipment and accessories will contribute to the player’s attributes. For instance, armors will improve the player’s defense, weapons will improve attack damage, and accessories might affect all five attributes of the player positively or negatively. As accessories may have negative effects on the player, the player will receive a brief description of the item every time the player encounters one and then decide whether to pick it or not.
 
 How Each Coding Element Supports our Features:
@@ -59,11 +58,11 @@ Arrays will be used to store the condition of the board (e.g. 0 represents an em
 
 Dynamic memory management
 
-Large arrays will be declared to store equipment and accessories, and skill cards held by the player as the player can collect a vast amount of items, which may lead to a waste of memory as we cannot change the size of the arrays depending on the situations. Dynamic memory management can help to better allocate memory at run-time.
+Vector is used for storage of cards. Linked list is used for storing players' accessories. Dynamic memory management can help to better allocate memory at run-time.
 
 File input/output
 
-Text files will be used to store game status and will be updated after every move of the player, and these data will be accessed by the printing functions to show the game status to the player.
+Text files will be used to store game status and player name. Game status will be updated after every move of the player.
 
 Program codes in multiple files
 
