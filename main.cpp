@@ -983,6 +983,7 @@ void stats_command(character &player)
         int count = 1;
         while (true)
         {
+            count++;
             cout << current->name;
             if (count == 3)
             {
@@ -1173,6 +1174,7 @@ int main()
             {
                 cout << "You have survived " << player.day << " days." << endl;
                 stats_command(player);
+                continue;
             }
             else
             {
