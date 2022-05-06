@@ -49,6 +49,7 @@ struct character
 
 struct character player;
 
+//update character stat
 void update_character_stat(character &player)
 {
     const int equipment_count = 4;
@@ -124,7 +125,7 @@ bool pickup(accessories * &ptr, accessories * &p)
     }
     return picked;
 }
-
+//accessories that increase health
 void health_accessories(accessories * &ptr, int d)
 {
     accessories *p = new accessories;
@@ -163,7 +164,7 @@ void health_accessories(accessories * &ptr, int d)
         cout << endl << endl;
     }
 }
-
+//create accessories that increase attack
 void attack_accessories(accessories * &ptr, int d)
 {
     accessories *p = new accessories;
@@ -358,7 +359,7 @@ void negative_defense_accessories(accessories * &ptr, int d)
         cout << endl << endl;
     }
 }
-
+// random accessories drop
 void accessories_drop(accessories * &ptr, int d)
 {
     if (rand() % 4 != 0)
@@ -394,7 +395,7 @@ void accessories_drop(accessories * &ptr, int d)
         }
     }
 }
-
+//sword generation
 void sword(equipment equipment[], int d)
 {
     switch (rand() % 8)
@@ -428,7 +429,7 @@ void sword(equipment equipment[], int d)
     cout << "The monster dropped a " << equipment[0].name << "." << endl;
     cout << "You picked it up and replaced your old weapon with it." << endl;
 }
-
+//helmet generation
 void helmet(equipment equipment[], int d)
 {
     switch (rand() % 4)
@@ -450,7 +451,7 @@ void helmet(equipment equipment[], int d)
     cout << "The monster dropped a " << equipment[1].name << "." << endl;
     cout << "You picked it up and replaced your old helmet with it." << endl;
 }
-
+//armor generaton
 void armor(equipment equipment[], int d)
 {
     switch (rand() % 4)
@@ -472,7 +473,7 @@ void armor(equipment equipment[], int d)
     cout << "The monster dropped a " << equipment[2].name << "." << endl;
     cout << "You picked it up and replaced your old armor with it." << endl;
 }
-
+//boots generation
 void boots(equipment equipment[], int d)
 {
     switch (rand() % 3)
@@ -491,7 +492,7 @@ void boots(equipment equipment[], int d)
     cout << "The monster dropped a pair of " << equipment[3].name << "." << endl;
     cout << "You picked it up and replaced your old boots with it." << endl;
 }
-
+//equipment generation
 void equipment_drop(equipment equipment[], int d)
 {
     cout << endl;
@@ -515,7 +516,7 @@ void equipment_drop(equipment equipment[], int d)
     cin >> continue_input;
     cout << endl << endl;
 }
-
+//card generation
 void card_drop(character &player)
 {
     cout << endl;
@@ -536,7 +537,7 @@ void card_drop(character &player)
             break;
     }
 }
-
+//mobs spawn
 void slime(character player, mob &monster)
 {
     //slime high defense low attack
@@ -587,7 +588,6 @@ void loot(character &player)
 }
 
 //monsters always moves before player
-
 void combat(character &player)
 {
     //randomize the monster type
@@ -688,11 +688,7 @@ void combat(character &player)
 
 const int boardSize = 9;
 
-/* //count of cards(global)
-int shelter_count = player.cards[0];
-int barrack_count = player.cards[1];
-int forge_count = player.cards[2]; */
-
+//check what card is placed
 bool card_command_check(char card, character player)
 {
     if (card == 'S')
@@ -718,7 +714,7 @@ bool card_command_check(char card, character player)
     }
     return false;
 }
-
+//check whether card count is 0
 bool card_count_not_zero(character player){
     int sum = 0;
     for (int i=0; i<3; ++i){
@@ -729,14 +725,14 @@ bool card_count_not_zero(character player){
     }
     return true;
 }
-
+//update player coord on board
 void update_player_coord_on_board(int b[][9],character player){
     int x = player.coord[0];
     int y = player.coord[1];
     b[x][y] = 9;
 }
 
-
+//place card, remove 1 card from hand
 void place_card(int b[][9], char p, int x, int y){
     
     if(p == 'S'){
@@ -752,7 +748,7 @@ void place_card(int b[][9], char p, int x, int y){
         b[x][y] = 4;
     }
 }
-
+//print hand
 void print_hand(vector<int> cards)
 {
     cout << "You have " << cards[0] << " Shelters." << endl;
@@ -760,7 +756,7 @@ void print_hand(vector<int> cards)
     cout << "You have " << cards[2] << " Forges." << endl;
 }
 
-//include fog of war, cardtiles, player coord 
+//include cardtiles, player coord 
 void print_board(int b[][9], character player)
 {
     update_player_coord_on_board(b, player);
@@ -793,7 +789,7 @@ void print_board(int b[][9], character player)
     }
     cout << "P: player's location  M: monster  S: shelter  B: barracks  F: forge  -: empty" << endl;
 }
-
+//print clear card placement
 void print_board_card_placement(int b[][9], character player)
 {
     update_player_coord_on_board(b, player);
@@ -842,7 +838,7 @@ void print_board_card_placement(int b[][9], character player)
     cout << "_: valid location  X: invalid location  S: shelter  B: barracks  F: forge" << endl;
 
 }
-
+//detect card combinations, modify player stat
 void card_detection(int b[][9], character &player, int r, int c){
     //sbf = 234
     if(b[r][c] == 2){
@@ -867,7 +863,7 @@ void card_detection(int b[][9], character &player, int r, int c){
         }
     }
 }
-
+//check whether cardtile is full, if full 1.add player stat; 2. empty card tile
 void reset_and_update_card_tile(int b[][9], character &player){
     vector<int> card_holder;
     for (int r=0; r<9; ++r){
@@ -913,7 +909,7 @@ void reset_and_update_card_tile(int b[][9], character &player){
     }
 
 }
-
+//display player stat
 void display_player_stat(character &player)
 {
     update_character_stat(player);
@@ -962,7 +958,7 @@ void display_player_stat(character &player)
         }
     }
 }
-
+//stats command
 void stats_command(character &player)
 {
     for (int i=0; i<4; ++i)
@@ -1130,6 +1126,7 @@ int main()
     for (int i=0; i<3; ++i){
         player.cards.push_back(0);
     }
+    //remove prev point where player is located
     int prev_player_coord[2] = {};
 
     // set player initial location to (4,4)
