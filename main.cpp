@@ -158,7 +158,7 @@ void health_accessories(accessories * &ptr, int d)
     {
         cout << "Your health is increased by " << p->health << "HP." << endl;
         string continue_input;
-        cout << "Enter anythig to continue..." << endl;
+        cout << "Enter anything to continue..." << endl;
         cin >> continue_input;
         cout << endl << endl;
     }
@@ -197,7 +197,7 @@ void attack_accessories(accessories * &ptr, int d)
     {
         cout << "Your attack is increase by " << p->attack << "." << endl;
         string continue_input;
-        cout << "Enter anythig to continue..." << endl;
+        cout << "Enter anything to continue..." << endl;
         cin >> continue_input;
         cout << endl << endl;
     }
@@ -236,7 +236,7 @@ void defense_accessories(accessories * &ptr, int d)
     {
         cout << "Your defense is increased by " << p->defense << "." << endl;
         string continue_input;
-        cout << "Enter anythig to continue..." << endl;
+        cout << "Enter anything to continue..." << endl;
         cin >> continue_input;
         cout << endl << endl;
     }
@@ -275,7 +275,7 @@ void negative_health_accessories(accessories * &ptr, int d)
     {
         cout << "Your health is reduced by " << p->health * -1 << "HP." << endl;
         string continue_input;
-        cout << "Enter anythig to continue..." << endl;
+        cout << "Enter anything to continue..." << endl;
         cin >> continue_input;
         cout << endl << endl;
     }
@@ -314,7 +314,7 @@ void negative_attack_accessories(accessories * &ptr, int d)
     {
         cout << "Your attack is reduced by " << p->attack * -1 << "." << endl;
         string continue_input;
-        cout << "Enter anythig to continue..." << endl;
+        cout << "Enter anything to continue..." << endl;
         cin >> continue_input;
         cout << endl << endl;
     }
@@ -353,7 +353,7 @@ void negative_defense_accessories(accessories * &ptr, int d)
     {
         cout << "Your defense is reduced by " << p->defense * -1 << "." << endl;
         string continue_input;
-        cout << "Enter anythig to continue..." << endl;
+        cout << "Enter anything to continue..." << endl;
         cin >> continue_input;
         cout << endl << endl;
     }
@@ -913,9 +913,12 @@ void reset_and_update_card_tile(int b[][9], character &player){
     }
 
 }
-void display_player_stat(character &player){
+
+void display_player_stat(character &player)
+{
     update_character_stat(player);
-    for (int i=0; i<4; ++i){
+    for (int i=0; i<4; ++i)
+    {
         if(player.equipment[i].name.length() == 0){
             player.equipment[i].name  = "Empty Slot";
         }
@@ -927,6 +930,52 @@ void display_player_stat(character &player){
     cout << "Your equipments: " << player.equipment[0].name <<" | "<<  
     player.equipment[1].name<< " | " << player.equipment[2].name<<" | "<< player.equipment[3].name
     << endl;
+    if(player.accessories != NULL)
+    {
+        cout << "Your accessories: ";
+        struct accessories * current = player.accessories;
+        int count = 1;
+        while (true)
+        {
+            cout << current->name;
+            if (count == 3)
+            {
+                cout << endl;
+                count = 0;
+            }
+            else if (current->next == NULL)
+            {
+                cout << endl;
+            }
+            else if (current->next != NULL)
+            {
+                cout << " | ";
+            }
+            if (current->next != NULL)
+            {
+                current = current->next;
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+}
+
+void stats_command(character &player)
+{
+    for (int i=0; i<4; ++i)
+    {
+        if(player.equipment[i].name.length() == 0){
+            player.equipment[i].name  = "Empty Slot";
+        }
+    }
+    cout << "Your max health: " << player.max_health << endl;
+    cout << "Your health: " << player.health << endl;
+    cout << "Your attack: " << player.attack << endl;
+    cout << "Your defense: " << player.defense << endl;
+    cout << "Your equipments: " << player.equipment[0].name <<" | "<< player.equipment[1].name<< " | " << player.equipment[2].name<<" | "<< player.equipment[3].name << endl;
     if(player.accessories != NULL)
     {
         cout << "Your accessories: ";
@@ -1123,7 +1172,7 @@ int main()
             else if (command == "STATS")
             {
                 cout << "You have survived " << player.day << " days." << endl;
-                display_player_stat(player);
+                stats_command(player);
             }
             else
             {
