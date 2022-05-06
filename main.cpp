@@ -3,8 +3,9 @@
 #include <cmath>
 #include <string>
 #include <vector>
-#include "mobs.h"
+#include <fstream>
 #include "board.h"
+#include "mobs.h"
 
 using namespace std;
 
@@ -685,6 +686,288 @@ void combat(character &player)
     }
 }
 
+const int boardSize = 9;
+
+/* //count of cards(global)
+int shelter_count = player.cards[0];
+int barrack_count = player.cards[1];
+int forge_count = player.cards[2]; */
+
+bool card_command_check(char card, character player)
+{
+    if (card == 'S')
+    {
+        if (player.cards[0] > 0)
+        {
+            return true;
+        }
+    }
+    else if (card == 'B')
+    {
+        if (player.cards[1] > 0)
+        {
+            return true;
+        }
+    }
+    else if (card == 'F')
+    {
+        if (player.cards[2] > 0)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool card_count_not_zero(character player){
+    int sum = 0;
+    for (int i=0; i<3; ++i){
+        sum += player.cards[i];
+    }
+    if(sum == 0){
+        return false;
+    }
+    return true;
+}
+
+void update_player_coord_on_board(int b[][9],character player){
+    int x = player.coord[0];
+    int y = player.coord[1];
+    b[x][y] = 9;
+}
+
+
+void place_card(int b[][9], char p, int x, int y){
+    
+    if(p == 'S'){
+        player.cards[0]--;
+        b[x][y] = 2;
+    }
+    else if (p == 'B'){
+        player.cards[1]--;
+        b[x][y] = 3;
+    }
+    else if (p == 'F'){
+        player.cards[2]--;
+        b[x][y] = 4;
+    }
+}
+
+void print_hand(vector<int> cards)
+{
+    cout << "You have " << cards[0] << " Shelters." << endl;
+    cout << "You have " << cards[1] << " Barracks." << endl;
+    cout << "You have " << cards[2] << " Forges." << endl;
+}
+
+//include fog of war, cardtiles, player coord 
+void print_board(int b[][9], character player)
+{
+    update_player_coord_on_board(b, player);
+    
+    for (int r=0; r<9; ++r){
+        for (int c=0; c<9; ++c){
+            switch (b[r][c])
+            {
+                case 0:
+                    cout << '-' << ' ';
+                    break;
+                case 1:
+                    cout << 'M' << ' ';
+                    break;
+                case 2:
+                    cout << 'S' << ' ';
+                    break;
+                case 3:
+                    cout << 'B' << ' ';
+                    break;
+                case 4:
+                    cout << 'F' << ' ';
+                    break;
+                case 9:
+                    cout << 'P' << ' ';
+                    break;
+            }
+        }
+        cout << endl;
+    }
+    cout << "P: player's location  M: monster  S: shelter  B: barracks  F: forge  -: empty" << endl;
+}
+
+void print_board_card_placement(int b[][9], character player)
+{
+    update_player_coord_on_board(b, player);
+
+    cout << "       Column" << endl;
+    cout << "       0 1 2 3 4 5 6 7 8" << endl;
+    for (int r=0; r<9; ++r)
+    {
+        if (r == 0)
+        {
+            cout << "Row  ";
+        }
+        else
+        {
+            cout << "     ";
+        }
+        cout << r << " ";
+        for (int c=0; c<9; ++c)
+        {
+            //card tile
+            if (r == 0 || r == 1 || c == 0 || c == 1 || c == 7 || c == 8)
+            {
+                switch (b[r][c])
+                {
+                    case 0:
+                        cout << '_' << ' ';
+                        break;
+                    case 2:
+                        cout << 'S' << ' ';
+                        break;
+                    case 3:
+                        cout << 'B' << ' ';
+                        break;
+                    case 4:
+                        cout << 'F' << ' ';
+                        break;
+                }
+            }
+            else
+            {
+                cout << 'X' << ' ';
+            }
+        }
+        cout << endl;
+    }
+    cout << "_: valid location  X: invalid location  S: shelter  B: barracks  F: forge" << endl;
+
+}
+
+void card_detection(int b[][9], character &player, int r, int c){
+    //sbf = 234
+    if(b[r][c] == 2){
+        if(b[r+1][c]==2 || b[r+1][c+1]==2 || b[r+1][c-1]==2 
+        || b[r][c+1]==2 || b[r][c-1]==2 || b[r-1][c+1]==2 
+        || b[r-1][c]==2 || b[r-1][c-1]==2){
+            player.health++;
+        }
+    }
+    if(b[r][c] == 3){
+        if(b[r+1][c]==3 || b[r+1][c+1]==3 || b[r+1][c-1]==3 
+        || b[r][c+1]==3 || b[r][c-1]==3 || b[r-1][c+1]==3 
+        || b[r-1][c]==3 || b[r-1][c-1]==3){
+            player.attack++;
+        }
+    }
+    if(b[r][c] == 4){
+        if(b[r+1][c]==4 || b[r+1][c+1]==4 || b[r+1][c-1]==4 
+        || b[r][c+1]==4 || b[r][c-1]==4 || b[r-1][c+1]==4 
+        || b[r-1][c]==4 || b[r-1][c-1]==4){
+            player.defense++;
+        }
+    }
+}
+
+void reset_and_update_card_tile(int b[][9], character &player){
+    vector<int> card_holder;
+    for (int r=0; r<9; ++r){
+        for (int c=0; c<9; ++c){
+            if(cardTile(r,c)){
+                //should pushback all card tiles
+                card_holder.push_back(b[r][c]);
+            }
+        }
+    }
+
+    bool card_holder_full = true;
+
+    //if one cardtiles value = 0 >> not full
+    for (int i=0; i<card_holder.size(); ++i){
+        if(card_holder[i] == 0){
+            card_holder_full = false;
+        }
+    }
+    
+
+    //update player stats
+    if (card_holder_full == true){
+        for (int r=0; r<9; ++r){
+            for (int c=0; c<9; ++c){
+                if(cardTile(r,c)){
+                    card_detection(b, player, r, c);
+                }
+            }
+        }
+    }
+
+    //reset cardtile
+    if (card_holder_full == true){
+        for (int r =0; r<9; ++r){
+            for (int c=0; c<9; ++c){
+                if(cardTile(r,c)){
+                    b[r][c] = 0;
+                }
+            }
+        }
+        card_holder_full = false;
+    }
+
+}
+void display_player_stat(character &player){
+    update_character_stat(player);
+    for (int i=0; i<4; ++i){
+        if(player.equipment[i].name.length() == 0){
+            player.equipment[i].name  = "Empty Slot";
+        }
+    }
+    cout << "Your max health: " << player.max_health << endl;
+    cout << "Your health: " << player.health << endl;
+    cout << "Your attack: " << player.attack << endl;
+    cout << "Your defense: " << player.defense << endl;
+    cout << "Your equipments: " << player.equipment[0].name <<" | "<<  
+    player.equipment[1].name<< " | " << player.equipment[2].name<<" | "<< player.equipment[3].name
+    << endl;
+    if(player.accessories != NULL)
+    {
+        cout << "Your accessories: ";
+        struct accessories * current = player.accessories;
+        int count = 1;
+        while (true)
+        {
+            cout << current->name;
+            if (count == 3)
+            {
+                cout << endl;
+                count = 0;
+            }
+            else if (current->next == NULL)
+            {
+                cout << endl;
+            }
+            else if (current->next != NULL)
+            {
+                cout << " | ";
+            }
+            if (current->next != NULL)
+            {
+                current = current->next;
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+}
+
+// copy to control.cpp
+void restore_coords(int b[][9], character player, int prev_coord[2]){
+    if(player.coord[0] != prev_coord[0] || player.coord[1] != prev_coord[1]){
+        b[prev_coord[0]][prev_coord[1]] = 0;
+    }
+}
+
+
 void save(const character player, int board[][9])
 {
     ofstream fout;
@@ -716,4 +999,298 @@ void save(const character player, int board[][9])
         }
     }
     fout.close();
+}
+
+void load(character &player, int board[][9])
+{
+    ifstream fin;
+    fin.open("save.txt");
+    if (fin.fail())
+    {
+        cout << "Welcome to Enslaved. In this place, you goal is to survive as long as you can." << endl;
+        cout << "You will be surrounded by monster trying to kill you, by killing monster, you may find useful item to help you survive." << endl;
+        cout << "Now if you are ready, enter your name to start the game!" << endl;
+        cin >> player.name;
+        cout << endl;
+    }
+    else
+    {
+        string player_name, equip_name, flag, descrip;
+        getline(fin, player_name);
+        player.name = player_name;
+        fin >> player.day >> player.coord[0] >> player.coord[1] >> player. max_movement >> player.move_count >> player.max_health >> player.health >> player.regeneration >> player.attack >> player.attack_speed >> player.defense;
+        //still working until here
+        for (int i = 0; i < 4; ++i)
+        {
+            fin.ignore();
+            getline(fin, equip_name);
+            player.equipment[i].name = equip_name;
+            fin >> player.equipment[i].health >> player.equipment[i].attack >> player.equipment[i].attack_speed >> player.equipment[i].defense;
+        }
+        
+        for (int i = 0; i < 20; ++i)
+        {
+            fin.ignore();
+            getline(fin, flag);
+            if (flag == "end")
+            {
+                break;
+            }
+            else
+            {
+                accessories * p = new accessories;
+                p->name = flag;
+                fin.ignore();
+                getline(fin, descrip);
+                p->description = descrip;
+                fin >> p->health >> p->attack >> p->defense;
+                p->next = player.accessories;
+                player.accessories = p;
+            }
+        }
+
+        for (int i = 0; i < 3; ++i)
+        {
+            fin >> player.cards[i];
+        }
+
+        for (int i = 0; i < 9; ++i)
+        {
+            for (int j = 0; j < 9; ++j)
+            {
+                fin >> board[i][j];
+            }
+        }
+        string startgame;
+        cout << "Welcome back " << player.name << "!" << endl;
+        cout << "If you are ready, enter anything to start the game!" << endl;
+        cin >> startgame;
+        cout << endl;
+    }
+    fin.close();
+}
+
+void save(const character player, int board[][9])
+{
+    ofstream fout;
+    fout.open("save.txt");
+    fout << player.name << endl << player.day << endl << player.coord[0] << endl << player.coord[1] << endl << player.max_movement << endl << player.move_count << endl << player.max_health << endl << player.health << endl << player.regeneration << endl << player.attack << endl << player.attack_speed << endl << player.defense << endl;
+    for (int i = 0; i < 4; ++i)
+    {
+        fout << player.equipment[i].name << endl << player.equipment[i].health << endl << player.equipment[i].attack << endl << player.equipment[i].attack_speed << endl << player.equipment[i].defense << endl;
+    }
+    if (player.accessories != NULL)
+    {
+        struct accessories * current = player.accessories;
+        while (current->next != NULL)
+        {
+            fout << current->name << endl << current->description << endl << current->health << endl << current->attack << endl << current->defense << endl;
+            current = current->next;
+        }
+    }
+    fout << "end" << endl;
+    for (int i = 0; i < 3; ++i)
+    {
+        fout << player.cards[i] << endl;
+    }
+    for (int i = 0; i < 9; ++i)
+    {
+        for (int j = 0; j < 9; ++j)
+        {
+            fout << board[i][j] << endl;
+        }
+    }
+    fout.close();
+}
+
+int main()
+{
+    srand(time(NULL));
+    
+    int board[9][9];
+    initBoard(board); // set all entries = 0
+
+    for (int i=0; i<3; ++i){
+        player.cards.push_back(0);
+    }
+    int prev_player_coord[2] = {};
+
+    // set player initial location to (4,4)
+    player.coord[0] = 4;
+    player.coord[1] = 4;
+
+    load(player, board);
+
+    string command;
+    int move_x = 0, move_y = 0;
+    int moving_path[2] = {};
+    while (player.health > 0)
+    {
+        int numOfMobs = getMobsNum(board, player.move_count);
+        setMobsLoc(board, numOfMobs);
+        cout << "------------------" <<endl;
+        print_board(board, player);
+        cout << "------------------" <<endl;
+
+        prev_player_coord[0] = player.coord[0];
+        prev_player_coord[1] = player.coord[1];
+
+        cout << "Select your paths from here:" << endl << endl;
+        cout << "UL = Up Left    U = Up    UR = Up Right" << endl;
+        cout << "L  = Left                 R  = Right" << endl;
+        cout << "DL = Down Left  D = Down  DR = Down Right" << endl << endl;
+        cout << "Or enter \"EXIT\" to leave the game and \"STATS\" to see your character statistics" << endl;
+        cout << "Enter your moving path:" << endl;
+        
+        bool moving_state = false;
+        
+        while (!moving_state)
+        {
+            cin >> command;
+            cout << endl;
+            if (command == "EXIT")
+            {
+                save(player, board);
+                return 0;
+            }
+            else if (command == "STATS")
+            {
+                cout << "You have survived " << player.day << " days." << endl;
+                display_player_stat(player);
+            }
+            else
+            {
+                if (command == "UL")
+                {
+                    move_y = -1;
+                    move_x = -1;
+                }
+                if (command == "U")
+                {
+                    move_y = 0;
+                    move_x = -1;
+                }
+                if (command == "UR")
+                {
+                    move_y = 1;
+                    move_x = -1;
+                }
+                if (command == "L")
+                {
+                    move_y = -1;
+                    move_x = 0;
+                }
+                if (command == "R")
+                {
+                    move_y = 1;
+                    move_x = 0;
+                }
+                if (command == "DL")
+                {
+                    move_y = -1;
+                    move_x = 1;
+                }if (command == "D")
+                {
+                    move_y = 0;
+                    move_x = 1;
+                }
+                if (command == "DR")
+                {
+                    move_y = 1;
+                    move_x = 1;
+                }
+            }
+            if (move(move_x, move_y, player.coord) == true)
+            {
+                break;
+            }
+        }
+        // player can move
+        
+        player.move_count++;
+        if (player.move_count == 5)
+        {
+            player.day++;
+            player.move_count = 0;
+            player.health += player.max_health/3;
+            if (player.health >= player.max_health)
+            {
+                player.health = player.max_health;
+            }
+            cout << endl << endl << "You have survived " << player.day << " days." << endl << endl;
+        }
+
+        cout << endl << endl;
+        restore_coords(board, player, prev_player_coord);
+        // enter combat flag
+        bool enter_combat = enterCombat(board, player.coord[0], player.coord[1]);
+
+        if (enter_combat == true)
+        {
+            combat(player);
+            // space for accumulate player stats after receiving items/cards
+
+            if (card_count_not_zero(player) == true)
+            {
+                cout << "Card placement round!" << endl;
+                print_hand(player.cards);
+                cout << "You may now place your cards (S: Shelter, B: Barracks, F: Forge)." << endl;
+                cout << "Enter the card you wish to place: S or B or F" << endl;
+                char card_command;
+                bool card_command_valid = false;
+                while (!card_command_valid)
+                {
+                    cin >> card_command;
+                    if (card_command == 'S' || card_command == 'B' || card_command == 'F')
+                    {
+                        card_command_valid = card_command_check(card_command, player);
+                        if (card_command_valid == false)
+                        {
+                            cout << endl << "You do not have that card yet! Pick another one!" << endl;
+                            cout << "Enter the card you wish to place: S or B or F" << endl;
+                        }
+                    }
+                    else
+                    {
+                        cout << "Invalid command!" << endl;
+                        cout << "Enter the card you wish to place: S or B or F" << endl;
+                    }
+                }
+                cout << endl;
+                int row, col;
+                bool coord_valid = false;
+                while (!coord_valid)
+                {
+                    print_board_card_placement(board, player);
+                    cout << "Enter the row you wish to place your card on:" << endl;
+                    cin >> row;
+                    cout << "Enter the column you wish to place your card on:" << endl;
+                    cin >> col;
+                    if (cardTile(row, col))
+                    {
+                        coord_valid = true;
+                        place_card(board, card_command, row, col);
+                    }
+                    else
+                    {
+                        cout << "Invalid coordinates!" << endl;
+                    }
+                }
+                enter_combat = false;
+            }
+        }
+    }
+    if (player.health <= 0)
+    {
+        remove("save.txt");
+        cout << "Your character data has been deleted." << endl;
+    }
+    else
+    {
+        update_character_stat(player);
+        reset_and_update_card_tile(board, player);
+        display_player_stat(player);
+        save(player, board);
+    }
+    return 0;
 }
