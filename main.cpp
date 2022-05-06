@@ -1070,39 +1070,6 @@ void load(character &player, int board[][9])
     fin.close();
 }
 
-void save(const character player, int board[][9])
-{
-    ofstream fout;
-    fout.open("save.txt");
-    fout << player.name << endl << player.day << endl << player.coord[0] << endl << player.coord[1] << endl << player.max_movement << endl << player.move_count << endl << player.max_health << endl << player.health << endl << player.regeneration << endl << player.attack << endl << player.attack_speed << endl << player.defense << endl;
-    for (int i = 0; i < 4; ++i)
-    {
-        fout << player.equipment[i].name << endl << player.equipment[i].health << endl << player.equipment[i].attack << endl << player.equipment[i].attack_speed << endl << player.equipment[i].defense << endl;
-    }
-    if (player.accessories != NULL)
-    {
-        struct accessories * current = player.accessories;
-        while (current->next != NULL)
-        {
-            fout << current->name << endl << current->description << endl << current->health << endl << current->attack << endl << current->defense << endl;
-            current = current->next;
-        }
-    }
-    fout << "end" << endl;
-    for (int i = 0; i < 3; ++i)
-    {
-        fout << player.cards[i] << endl;
-    }
-    for (int i = 0; i < 9; ++i)
-    {
-        for (int j = 0; j < 9; ++j)
-        {
-            fout << board[i][j] << endl;
-        }
-    }
-    fout.close();
-}
-
 int main()
 {
     srand(time(NULL));
