@@ -36,12 +36,12 @@ struct character
     int coord[2];
     int max_movement = 5;
     int move_count = 0;
-    int max_health = 100; //base stat
+    int max_health = 100;
     int health = 100;
-    int regeneration = 0; //base stat
-    int attack = 25; //base stat
+    int regeneration = 0;
+    int attack = 25;
     int attack_speed = 10;
-    int defense = 0; //base stat
+    int defense = 0;
     struct equipment equipment[4]; //weapon, helmet, armor, boots
     struct accessories * accessories = NULL;
     vector<int> cards;
@@ -49,7 +49,7 @@ struct character
 
 struct character player;
 
-//update character stat
+//update character stat after item drop or before saving game data
 void update_character_stat(character &player)
 {
     const int equipment_count = 4;
@@ -92,6 +92,7 @@ struct mob
 
 int board[9][9];
 
+//for player to decide whether to pick up the accessory or not
 bool pickup(accessories * &ptr, accessories * &p)
 {
     //interaction
@@ -125,7 +126,8 @@ bool pickup(accessories * &ptr, accessories * &p)
     }
     return picked;
 }
-//accessories that increase health
+
+//health accessories name, description and stat generation
 void health_accessories(accessories * &ptr, int d)
 {
     accessories *p = new accessories;
@@ -164,7 +166,8 @@ void health_accessories(accessories * &ptr, int d)
         cout << endl << endl;
     }
 }
-//create accessories that increase attack
+
+//attack accessories name, description and stat generation
 void attack_accessories(accessories * &ptr, int d)
 {
     accessories *p = new accessories;
@@ -204,6 +207,7 @@ void attack_accessories(accessories * &ptr, int d)
     }
 }
 
+//defense accessories name, description and stat generation
 void defense_accessories(accessories * &ptr, int d)
 {
     accessories *p = new accessories;
@@ -243,6 +247,7 @@ void defense_accessories(accessories * &ptr, int d)
     }
 }
 
+//minus health accessories name, description and stat generation
 void negative_health_accessories(accessories * &ptr, int d)
 {
     accessories *p = new accessories;
@@ -282,6 +287,7 @@ void negative_health_accessories(accessories * &ptr, int d)
     }
 }
 
+//minus attack accessories name, description and stat generation
 void negative_attack_accessories(accessories * &ptr, int d)
 {
     accessories *p = new accessories;
@@ -321,6 +327,7 @@ void negative_attack_accessories(accessories * &ptr, int d)
     }
 }
 
+//minus defense accessories name, description and stat generation
 void negative_defense_accessories(accessories * &ptr, int d)
 {
     accessories *p = new accessories;
@@ -492,7 +499,7 @@ void boots(equipment equipment[], int d)
     cout << "The monster dropped a pair of " << equipment[3].name << "." << endl;
     cout << "You picked it up and replaced your old boots with it." << endl;
 }
-//equipment generation
+//randomly decide which equipment is dropped
 void equipment_drop(equipment equipment[], int d)
 {
     cout << endl;
@@ -516,7 +523,7 @@ void equipment_drop(equipment equipment[], int d)
     cin >> continue_input;
     cout << endl << endl;
 }
-//card generation
+//random card drop
 void card_drop(character &player)
 {
     cout << endl;
@@ -568,7 +575,7 @@ void wolf(character player, mob &monster)
     monster.defense = 5;
 }
 
-//testing cards, remember to change back code
+//random decide what item is dropped
 void loot(character &player)
 {
     srand(time(NULL));
@@ -587,7 +594,7 @@ void loot(character &player)
     }
 }
 
-//monsters always moves before player
+//combat loop, calculations and displays
 void combat(character &player)
 {
     //randomize the monster type
@@ -688,7 +695,7 @@ void combat(character &player)
 
 const int boardSize = 9;
 
-//check what card is placed
+//check whether the card command is valid
 bool card_command_check(char card, character player)
 {
     if (card == 'S')
@@ -725,6 +732,7 @@ bool card_count_not_zero(character player){
     }
     return true;
 }
+
 //update player coord on board
 void update_player_coord_on_board(int b[][9],character player){
     int x = player.coord[0];
@@ -748,7 +756,8 @@ void place_card(int b[][9], char p, int x, int y){
         b[x][y] = 4;
     }
 }
-//print hand
+
+//print card possessed by the player
 void print_hand(vector<int> cards)
 {
     cout << "You have " << cards[0] << " Shelters." << endl;
@@ -789,7 +798,8 @@ void print_board(int b[][9], character player)
     }
     cout << "P: player's location  M: monster  S: shelter  B: barracks  F: forge  -: empty" << endl;
 }
-//print clear card placement
+
+//print locations where play can place their card
 void print_board_card_placement(int b[][9], character player)
 {
     update_player_coord_on_board(b, player);
@@ -836,8 +846,8 @@ void print_board_card_placement(int b[][9], character player)
         cout << endl;
     }
     cout << "_: valid location  X: invalid location  S: shelter  B: barracks  F: forge" << endl;
-
 }
+
 //detect card combinations, modify player stat
 void card_detection(int b[][9], character &player, int r, int c){
     //sbf = 234
@@ -863,6 +873,7 @@ void card_detection(int b[][9], character &player, int r, int c){
         }
     }
 }
+
 //check whether cardtile is full, if full 1.add player stat; 2. empty card tile
 void reset_and_update_card_tile(int b[][9], character &player){
     vector<int> card_holder;
@@ -907,8 +918,8 @@ void reset_and_update_card_tile(int b[][9], character &player){
         }
         card_holder_full = false;
     }
-
 }
+
 //display player stat
 void display_player_stat(character &player)
 {
@@ -958,6 +969,7 @@ void display_player_stat(character &player)
         }
     }
 }
+
 //stats command
 void stats_command(character &player)
 {
@@ -1006,14 +1018,15 @@ void stats_command(character &player)
     }
 }
 
-// copy to control.cpp
+//find the player's location before the movement
 void restore_coords(int b[][9], character player, int prev_coord[2]){
-    if(player.coord[0] != prev_coord[0] || player.coord[1] != prev_coord[1]){
+    if(player.coord[0] != prev_coord[0] || player.coord[1] != prev_coord[1])
+    {
         b[prev_coord[0]][prev_coord[1]] = 0;
     }
 }
 
-
+//save player's attributes and items, and card tile information
 void save(const character player, int board[][9])
 {
     ofstream fout;
@@ -1047,6 +1060,7 @@ void save(const character player, int board[][9])
     fout.close();
 }
 
+//load player's attributes and items, and card tile information
 void load(character &player, int board[][9])
 {
     ifstream fin;
@@ -1065,7 +1079,6 @@ void load(character &player, int board[][9])
         getline(fin, player_name);
         player.name = player_name;
         fin >> player.day >> player.coord[0] >> player.coord[1] >> player. max_movement >> player.move_count >> player.max_health >> player.health >> player.regeneration >> player.attack >> player.attack_speed >> player.defense;
-        //still working until here
         for (int i = 0; i < 4; ++i)
         {
             fin.ignore();
@@ -1116,6 +1129,7 @@ void load(character &player, int board[][9])
     fin.close();
 }
 
+//main game loop
 int main()
 {
     srand(time(NULL));
