@@ -4,6 +4,10 @@ Team members:
 mangofarmergoose - Chan Leong Sing 3035687675
 CagySloth - Ng Ching Lap 3035687742
 
+Problem Statement
+
+RPG Rogue like game has always been a hit since the genesis of computer games, however the strategical aspect of these games are lacking. Our game provide rewards to superior desicion making. Large amout of game objects needed to be initiallized much like modern consumer products. We can make use of dynamic memory management to allocate memory at run time for cards and accessories. 
+
 Game Description
 
 Game initialization:
